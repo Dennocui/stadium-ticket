@@ -9,7 +9,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>OPERA</title>
+    <title>Stadium Ticketing System</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
@@ -42,7 +42,7 @@
                     <nav class="classy-navbar justify-content-between" id="oneMusicNav">
 
                         <!-- Nav brand -->
-                    <a href="{{url('/')}}" class="nav-brand"><img src="{{ asset('img/core-img/logo.png') }}" alt=""></a>
+                    <a href="{{url('/')}}" class="nav-brand"></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -200,7 +200,7 @@
                                 
                                 </div>
 								 <div class="form-group">
-								<label for="Address">Address</label>
+								<label for="Address">Phone Number</label>
                                 <input type="text" class="form-control" id="Address" placeholder="Address" @error('Address') is-invalid @enderror name="Address" value="{{ old('Address') }}" required autocomplete="Address" autofocus>
                                 
                                @if(Session::has('errors'))

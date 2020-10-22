@@ -8,7 +8,7 @@ class hall extends Model
 {
     //
     protected $fillable = [
-        'no_rows', 'no_Seats',
+        'name','no_rows', 'no_Seats',
     ];
     public function event()
     {

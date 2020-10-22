@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Opera Ticket Reservation</title>
+<title>Stadium Ticketing</title>
 <!-- //for-mobile-apps -->
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -43,12 +43,12 @@
 <body>
 <div id='app'>
 <div class="content">
-	<h1>Opera Ticket Reservation</h1>
+	<h1>Satdium Ticket Reservation</h1>
 	<div class="main">
 		<h2>Book Your Seat Now?</h2>
 		<div class="wrapper">
 			<div id="seat-map">
-				<div class="front-indicator"><h3>Opera</h3></div>
+				<div class="front-indicator"><h3>Venue</h3></div>
 			</div>
 			<div class="booking-details">
 						<div id="legend"></div>
@@ -63,12 +63,12 @@
 							<br>
 						   <div class="form-group">
    							 <label for="exampleFormControlInput1">Credit (Master Card) Number</label>
-							<input class="form-control" type="text" title="Enter a Valid Credit Card Number" required pattern= "^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$" placeholder="ex: 1234 5678 9123 4567">	
+							<input class="form-control" type="text" title="Enter a Valid Credit Card Number"   placeholder="ex: 1234 5678 9123 4567">	
 						</div>
 							  
 							<div class="form-group">
    							 <label for="exampleFormControlInput1">Credit Card PIN</label>
-							<input class="form-control" type="text" title="Enter a Valid Credit Card PIN Number" pattern= "^[0-9]{3,4}$" placeholder="ex: 123 or 1234" required>	
+							<input class="form-control" type="text" title="Enter a Valid Credit Card PIN Number" placeholder="ex: 123 or 1234" >	
 						</div>
 
 						<div class="form-group">

@@ -4,7 +4,7 @@
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({{asset('img/bg-img/breadcumb3.jpg')}});">
         <div class="bradcumbContent">
-            <h2>Create an Event</h2>
+            <h2>Edit Event</h2>
         </div>
     </section>
     <!-- ##### Breadcumb Area End ##### -->
@@ -23,7 +23,7 @@
 							@csrf
 							<div class="form-group">
 							<label for="EventName">Event Name</label>
-							<input required type="text" class="form-control" id="EventName" placeholder="Event Name" @error('EventName') is-invalid @enderror name="EventName" value="{{ old('EventName') }}" required autocomplete="EventName" autofocus>
+							<input required type="text" value="{{$event->name}}" class="form-control" id="EventName" placeholder="Event Name" @error('EventName') is-invalid @enderror name="EventName" value="{{ old('EventName') }}" required autocomplete="EventName" autofocus>
                            
                                 @if(Session::has('errors'))  
                                 @if(Session::get('errors')->has('EventName'))  
@@ -33,7 +33,7 @@
                         </div>
 						 <div class="form-group">
 							<label for="EventDescription">Event Description</label>
-							<textarea class="form-control" style = "height:150px;" id="EventDescription" rows="20"  @error('EventDescription') is-invalid @enderror name="EventDescription" value="{{ old('EventDescription') }}" required autocomplete="EventDescription" autofocus></textarea>
+							<textarea class="form-control" value="{{$event->descrition}}" style = "height:150px;" id="EventDescription" rows="20"  @error('EventDescription') is-invalid @enderror name="EventDescription" value="{{ old('EventDescription') }}" required autocomplete="EventDescription" autofocus></textarea>
                                 @if(Session::has('errors'))  
                                 @if(Session::get('errors')->has('EventDescription'))  
                                        <div class="alert alert-danger"> {{ Session::get('errors')->first('EventDescription') }}</div>
@@ -43,7 +43,7 @@
 						 <div class="form-row">    
                             <div class="form-group col-md-3"> <!-- Date input -->
                                         <label class="control-label" for="EventDate">Event Date</label>
-                                        <input required type="date"class="form-control" id="EventDate" name="EventDate" placeholder="YYY/MM/DD" @error('EventDate') is-invalid @enderror name="EventDate" value="{{ old('EventDate') }}" required autocomplete="EventDate" autofocus>
+                                        <input required type="date" value="{{ $event->event_Date }}" class="form-control" id="EventDate" name="EventDate" placeholder="YYY/MM/DD" @error('EventDate') is-invalid @enderror name="EventDate" value="{{ old('EventDate') }}" required autocomplete="EventDate" autofocus>
                                          @if(Session::has('errors'))
                                     @if(Session::get('errors')->has('EventDate'))   
                                                 <div class="alert alert-danger"> {{ Session::get('errors')->first('EventDate') }}</div>
@@ -88,9 +88,12 @@
                                 </div>
                             </div>    
                         
-                           
-                            
                             <div class="form-group">
+                            <a href="#"><img src="{{ asset('storage/'. $event->image) }}" alt="" width="500" height="600"></a>
+                            </div>
+                            <div class="form-group">
+                                
+                                
                                      <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="inputGroupFile01"
                                         aria-describedby="inputGroupFileAddon01" @error('CoverImage') is-invalid @enderror name="CoverImage" value="{{ old('CoverImage') }}" required autocomplete="CoverImage" autofocus>
@@ -103,9 +106,9 @@
                                     @endif
                                     @endif
                                 </div>
-                                
+                                <a href="{{ url()->previous() }}"  class="btn oneMusic-btn mt-30 hide" >Back</a>
                             
-                                <button type="submit" class="btn oneMusic-btn mt-30 hide">Create</button>
+                                <button type="submit" class="btn oneMusic-btn mt-30 hide">Update</button>
                             </form>
                         </div>
                     </div>

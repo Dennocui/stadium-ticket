@@ -47,7 +47,7 @@ class EventController extends Controller
         //** redirect to page of creation of an event if you are auth: as manager*/
 
         //* create Ajax Request whenever the event date changes to get the avalible halls
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
             return view('pages.eventCreate'); // ??? Dummpy Page.
         }
         return abort(404);
@@ -61,7 +61,7 @@ class EventController extends Controller
 
     public function getAvailableHalls(Request $request)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
             $eventDate =  Carbon::parse($request->input('event_date')); //* got from create event form.
             $eventDuration = Carbon::createFromTimeString($request->input('event_duration'), 'Europe/London');
             $eventDateEnd = $eventDate->copy();
@@ -126,7 +126,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
 
             $this->validate($request, [
                 'CoverImage' => ['required', 'max:1999'],
@@ -193,7 +193,7 @@ class EventController extends Controller
         $reserved_tickets = 0;
         $total = 0;
 
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
 
             $tickets = ticket::all($columns = ['Event_id', 'Seat_numbers'])->filter(function ($ticket) use ($id) {
                 if ($ticket->Event_id == $id) {
@@ -223,7 +223,7 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
 
             $event = event::find($id);
 
@@ -231,11 +231,12 @@ class EventController extends Controller
                 return redirect('/event')->with('success', 'No Event Found'); //** Dummy Erorr Content Page */
             }
 
-            return view('pages.contact')->with('event', $event); //** Dummy Page */
+            return view('pages.eventEdit')->with('event', $event); //** Dummy Page */
         }
 
         return abort(404);
     }
+    
 
 
 
@@ -261,7 +262,7 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
             $event = event::find($id);
 
             if (!isset($event)) {

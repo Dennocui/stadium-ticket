@@ -27,7 +27,7 @@ class HullController extends Controller
     public function index()
     {
         //** view all halls */ table
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
             $halls = hall::all();
             return view('pages.hallView')->with('halls', $halls); //** TODO: Do this Page */
         }
@@ -41,7 +41,7 @@ class HullController extends Controller
      */
     public function create()
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
             return view('pages.hallCreate'); // ??? Dummpy Page.
         }
         return abort(404);
@@ -55,7 +55,7 @@ class HullController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::allows('isManager')) {
+        if (Gate::allows('isAdmin')) {
 
             $this->validate($request, [
                 'Rows' => ['required', 'Integer'],

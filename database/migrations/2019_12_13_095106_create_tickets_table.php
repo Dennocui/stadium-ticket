@@ -17,6 +17,7 @@ class CreateTicketsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('Event_id');
+            // $table->decimal('price',9,3);
             $table->text('Seat_numbers');/* ? put this in tickets model --> protected $casts = [
         'Seat_numbers' => 'array'
     ]; */

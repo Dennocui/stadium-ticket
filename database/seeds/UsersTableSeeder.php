@@ -16,32 +16,46 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // $user = new User();
-        // $user->username = 'Yahia_A1';
-        // $user->fname = 'Yahia';
-        // $user->lname = 'Mohamed';
-        // $user->password = Hash::make('12345');
-        // $user->email = 'Yahia.M.Yahia96@gmail.com';
-        // $user->city = 'Cairo';
-        // $user->Address = 'Maboutheen City After Tharwat Bridge';
-        // $user->gender = 'M';
-        // $user->Bdate = '1996-11-01';
-        // $user->privilage = 'admin';
+        $user = new User();
+        $user->username = 'Admin 1';
+        $user->fname = 'Admin';
+        $user->lname = 'One';
+        $user->password = Hash::make('12345');
+        $user->email = 'admin@admin.com';
+        $user->city = 'Thika';
+        $user->Address = 'Maboutheen City After Tharwat Bridge';
+        $user->gender = 'M';
+        $user->Bdate = '1996-11-01';
+        $user->privilage = 'admin';
 
-        // $user->save();
+        $user->save();
 
 
         $user = new User();
-        $user->username = 'Yahia_C11';
-        $user->fname = 'Yahia';
-        $user->lname = 'Mohamed';
+        $user->username = 'User1';
+        $user->fname = 'User';
+        $user->lname = 'One';
         $user->password = Hash::make('12345');
-        $user->email = 'C11@gmail.com';
-        $user->city = 'Cairo';
+        $user->email = 'user@user.com';
+        $user->city = 'Mombasa';
         $user->Address = 'Maboutheen City After Tharwat Bridge';
         $user->gender = 'M';
         $user->Bdate = '1996-11-01';
         $user->privilage = 'customer';
+
+        $user->save();
+
+        $user = new User();
+        $user->username = 'Manager 1';
+        $user->fname = 'Manager';
+        $user->lname = 'One';
+        $user->password = Hash::make('12345');
+        $user->email = 'manager@manager.com';
+        $user->city = 'Nairobi';
+        $user->Address = 'Maboutheen City After Tharwat Bridge';
+        $user->gender = 'M';
+        $user->Bdate = '1996-11-01';
+        $user->privilage = 'Manager';
 
         $user->save();
     }
