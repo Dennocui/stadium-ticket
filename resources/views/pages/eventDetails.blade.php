@@ -136,7 +136,7 @@
                             {{ route('ticket.store') }}
                             
                             --}}
-                        <form action="/requestpay'" method="post">
+                        <form action="/requestpay" method="post">
 							@csrf
 
                             <input required type="text" id="customer_id" name="customer_id" value="{{ Auth::user()->id }}" hidden>
