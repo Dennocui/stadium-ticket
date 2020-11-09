@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        \Safaricom\Mpesa\MpesaServiceProvider::class,
+        SmoDav\Mpesa\Laravel\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -228,7 +228,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Mpesa'=> \Safaricom\Mpesa\MpesaServiceProvider::class,
+        'STK'       => SmoDav\Mpesa\Laravel\Facades\STK::class,
+        'Registrar' => SmoDav\Mpesa\Laravel\Facades\Registrar::class,
+        'Identity' => SmoDav\Mpesa\Laravel\Facades\Identity::class,
 
     ],
 

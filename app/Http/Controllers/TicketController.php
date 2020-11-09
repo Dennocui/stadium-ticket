@@ -13,6 +13,9 @@ use App\ticket;
 use App\Http\Controllers\array_flatten;
 use App\hall;
 use Illuminate\Support\Facades\Auth;
+use SmoDav\Mpesa\C2B\STK;
+use Illuminate\Support\Arr;
+use Faker\Factory;
 
 class TicketController extends Controller
 {
@@ -57,15 +60,15 @@ class TicketController extends Controller
         // return view('admin.tickets.create', compact('events'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request)
     {
+
+       
+
         if (Gate::allows('isCustomer')) {
+
+
             
         $ticket = new ticket();
         $ticket->customer_id = $request->input('customer_id');
@@ -74,14 +77,61 @@ class TicketController extends Controller
         $ticket->amount = $request->input('amount');
 
         $ticket->save();
-        // $ticket = ticket::create($request->all());
-
+     
         return redirect('/event/' . $request->input('eventID'))->with('success', "Tickets Booked Successfully, Check Them in 'Reserved Tickets' Tab");
                 
             }
         
         return abort(404);
     }
+
+
+    public function initSTK(Request $request)
+    {
+
+        
+        $uniqueCode = $this->random_number_string(5);
+
+        $phoneNo = '254' . substr($request->phonenumber, -9);
+
+        $mpesa_response = STK::request(intval($request->amount))
+                        ->from($phoneNo)
+                        ->usingReference(env('APP_NAME'),$uniqueCode)
+                        ->push();
+
+        $stk_push = $this->handleSTKrequestResp($mpesa_response);
+
+        return $this->handleSTKrequestResp($mpesa_response);
+    }
+
+
+
+    private function random_number_string($length)
+    {
+        $faker = Factory::create();
+        return $faker->randomNumber($length);
+    }
+
+    private function handleSTKrequestResp($mpesa_response)
+    {
+        if($mpesa_response){
+            $payload = json_decode(json_encode($mpesa_response));
+//           
+            if (Arr::has($payload,'ResponseCode')) {
+                if ($payload->ResponseCode == 0) {
+                    return response()->json([
+                        'data' => $payload,
+                        'message' => 'Enter your Mpesa PIN to complete the order'],200);
+                } else{
+                    return response()->json(['message' => 'Error Occurred while initiating payment, try again'], 400);
+                }
+            }else{
+                return response()->json(['message' => 'Error Occurred while initiating payment, try again'], 400);
+            }
+        }
+        return response()->json(['message' => 'Error Occurred while initiating payment, try again'], 400);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -90,33 +140,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        if (Gate::allows('isCustomer')) {
-            $event = event::find($id);
-            if (isset($event)) {
-                $hall = hall::find($event->hall_id);
-                $arr = json_decode(ticket::where('event_id', $id)->get('Seat_numbers'), true);
-                $array = array_column($arr, 'Seat_numbers');
-                $a1 = array();
-                if (count($array)  != 0) {
-                    $a1 = explode(' ', $array[0]);
-                    for ($i = 0; $i < count($array) - 1; $i++) {
-                        $a1 = array_merge($a1, explode(' ', $array[$i + 1]));
-                    }
-                }
-
-                $hall_rows =  $hall->no_rows;
-                $hall_seats = $hall->no_Seats;
-                $data = [
-                    'hall_rows'  => $hall_rows,
-                    'hall_seats'   => $hall_seats,
-                    'eventID' => $id, //** TODO: Set Already Reserved Seats*/
-                ];
-                return view('pages.seats')->with('a1', $a1)->with($data);
-            } else {
-                return abort(404);
-            }
-        }
-        return abort(404);
+        
     }
 
     /**

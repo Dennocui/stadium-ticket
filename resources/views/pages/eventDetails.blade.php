@@ -136,8 +136,8 @@
                             {{ route('ticket.store') }}
                             
                             --}}
-                        <form action="/requestpay" method="post">
-							@csrf
+                        <form action=" {{ route('ticket.store') }}" method="post">
+                            @csrf
 
                             <input required type="text" id="customer_id" name="customer_id" value="{{ Auth::user()->id }}" hidden>
                             <input required type="text" id="Event_id" name="Event_id" value="{{$event->id}}" hidden>
@@ -158,7 +158,7 @@
                             <input required type="text" class="form-control" id="phonenumber" onkeypress='validate(event)' name="phonenumber" placeholder="254..." maxlength="11" minlength="10" required>
                           </div>
 
-                          <button type="submit" class="btn oneMusic-btn mt-30 hide">Buy</button>
+                          <button type="submit" class="btn oneMusic-btn mt-30 hide" >Buy</button>
                         </form>
                         @endif
                         

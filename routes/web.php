@@ -47,7 +47,7 @@ Route::get('event/pdf','EventController@createPDF');
 //     return view('payer');
 // });
 
-Route::post('/requestpay','initiatepush@pay');
+// Route::post('/ticket','TicketController@pay')->name('ticket.pay');;
 
 Route::post('/callback','confirmcallback@storeResults');
 
