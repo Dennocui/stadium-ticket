@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class confirmcallback extends Controller
 {
-    public function storeResults(Request $requests){
+    public function storeResults(Request $request){
         
         $request=file_get_contents('php://input');
         
