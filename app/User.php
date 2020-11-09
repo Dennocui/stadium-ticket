@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function ticket()
     {
-        return $this->belongsToMany('App\event');
+        return $this->hasMany('App\ticket', 'ticket_id');
     }
 
     public $primaryKey = 'id';

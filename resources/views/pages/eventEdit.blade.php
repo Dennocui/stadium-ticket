@@ -19,8 +19,9 @@
                         <!-- Login Form -->
                         <div class="login-form">
                             
-                            <form action="{{ route('event.store') }}" method="post" enctype="multipart/form-data">
-							@csrf
+                            <form action="{{ route('event.update', $event->id) }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            {{ method_field('PUT') }}
 							<div class="form-group">
 							<label for="EventName">Event Name</label>
 							<input required type="text" value="{{$event->name}}" class="form-control" id="EventName" placeholder="Event Name" @error('EventName') is-invalid @enderror name="EventName" value="{{ old('EventName') }}" required autocomplete="EventName" autofocus>
@@ -33,7 +34,7 @@
                         </div>
 						 <div class="form-group">
 							<label for="EventDescription">Event Description</label>
-							<textarea class="form-control" value="{{$event->descrition}}" style = "height:150px;" id="EventDescription" rows="20"  @error('EventDescription') is-invalid @enderror name="EventDescription" value="{{ old('EventDescription') }}" required autocomplete="EventDescription" autofocus></textarea>
+							<textarea class="form-control" value="{{$event->descrition}}" style = "height:150px;" id="EventDescription" rows="20"  @error('EventDescription') is-invalid @enderror name="EventDescription" value="{{ old('EventDescription') }}" required autocomplete="EventDescription" autofocus> {{$event->descrition}}</textarea>
                                 @if(Session::has('errors'))  
                                 @if(Session::get('errors')->has('EventDescription'))  
                                        <div class="alert alert-danger"> {{ Session::get('errors')->first('EventDescription') }}</div>
@@ -85,7 +86,18 @@
                                     @endif
                                 </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="EventName">Price</label>
+                                        <input required type="text" class="form-control" id="price" placeholder="Price" @error('price') is-invalid @enderror name="price" value="{{$event->price}}" required autocomplete="price" autofocus>
+                                       
+                                            @if(Session::has('errors'))  
+                                            @if(Session::get('errors')->has('price'))  
+                                                   <div class="alert alert-danger"> {{ Session::get('errors')->first('price') }}</div>
+                                            @endif
+                                            @endif
+                                    </div>
                                 </div>
+                                
                             </div>    
                         
                             <div class="form-group">

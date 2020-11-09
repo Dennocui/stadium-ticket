@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class ticket extends Model
 {
     protected $fillable = [
-        'name', 'descrition', 'image', 'event_Date', 'event_duration', 'hall_id',
+        'customer_id','event_id ','units', 'amount',
     ];
     //
-    protected $casts = [
-        'Seat_numbers' => 'array'
-    ];
+   
 
     public function event()
     {
-        return $this->hasMany('App\event');
+        return $this->belongsTo('App\event', 'event_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'customer_id');
     }
 }

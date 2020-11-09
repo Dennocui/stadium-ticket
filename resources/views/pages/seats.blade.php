@@ -50,6 +50,7 @@
 			<div id="seat-map">
 				<div class="front-indicator"><h3>Venue</h3></div>
 			</div>
+
 			<div class="booking-details">
 						<div id="legend"></div>
 						<h3> Selected Seats (<span id="counter">0</span>):</h3>
@@ -96,58 +97,6 @@
 			<div class="clear"></div>
 		</div>
 		<script>
-				var firstSeatLabel = 1;
-			
-				var test = []
-				var rows={{$hall_rows}};
-				var cols={{$hall_seats}};
-				var i = 0 ;
-				var j = 0 ;
-				var dash = 40-cols;
-				for( i = 0 ; i < rows; i++)
-				{
-					var s = '';
-					for (j=0;j<40;j++)
-					{	
-						if (cols<40)
-						{
-							if(cols%2==0)
-							{
-								if(j<dash/2)
-								{
-									s+='_'
-								}
-								else if (j>dash/2 && j<dash/2+cols+1)
-								{
-									s+='f'
-								}
-								else {
-									s+='_'
-								}
-							}else{
-								if(j<dash/2)
-								{
-									s+='_'
-								}
-								else if (j>dash/2 && j<dash/2+cols)
-								{
-									s+='f'
-								}
-								else {
-									s+='_'
-								}
-							}
-							
-						}
-						else
-						{
-							s += 'f';
-						}
-						
-					}
-					test.push(s);
-					
-				}
 						
 				$(document).ready(function() {
 					var $cart = $('#selected-seats'),
@@ -237,7 +186,6 @@
 			}
 		</script>
 	</div>
-<p class="copy_rights">Copy Rights&copy; 2019 All rights reserved By Opera.</p>
 </div>
 </div>
 

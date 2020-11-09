@@ -16,14 +16,12 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('Event_id');
-            // $table->decimal('price',9,3);
-            $table->text('Seat_numbers');/* ? put this in tickets model --> protected $casts = [
-        'Seat_numbers' => 'array'
-    ]; */
-            $table->unique(['customer_id', 'Event_id']);
+            $table->unsignedBigInteger('event_id');
+            $table->integer('units')->default(1);
+            $table->integer('amount')->unsigned();
+            $table->unique(['customer_id', 'event_id']);
             $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('Event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

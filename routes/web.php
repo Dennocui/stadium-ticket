@@ -41,6 +41,16 @@ Route::resource('ticket', 'TicketController');
 Route::resource('user', 'UserController');
 Route::resource('Admin', 'AdminController');
 
+Route::get('event/pdf','EventController@createPDF');
+
+// Route::get('/launchpayer', function(){
+//     return view('payer');
+// });
+
+Route::post('/requestpay','initiatepush@pay');
+
+Route::post('/callback','confirmcallback@storeResults');
+
 
 Auth::routes(); //** TODO: BLock not needed extra auth Routes */
 

@@ -20,10 +20,13 @@ class CreateEventsTable extends Migration
             $table->string('image'); // !
             $table->dateTime('event_Date');
             $table->Time('event_duration');
+            $table->double('price', 15, 2);
             $table->unsignedBigInteger('hall_id');
             $table->unique(['event_Date', 'hall_id']);
             $table->foreign('hall_id')->references('id')->on('halls')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('open')->default(0);
             $table->timestamps();
+
         });
     }
 

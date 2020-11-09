@@ -23,7 +23,47 @@
                         <!-- Login Form -->
                         <div class="login-form">
                            <div class="container edittable">
-  <div class="row">
+@if(Gate::allows('isAdmin'))
+<div class="row">
+  <div class="col-12">
+      <table class="table table-bordered">
+      <thead>
+          <tr>
+          <th scope="col">Customer</th>
+          <th scope="col">Email</th>
+          <th scope="col">Tickets</th>
+          <th scope="col">Amount</th>
+          
+          <th scope="col">Cancel</th>
+          </tr>
+      </thead>
+      <tbody>
+          @foreach ($reservations as $r)
+                      <tr>
+                      <th scope="row">{{$r->event->name}}</th>
+                      <td>{{ $r->event->event_Date }}</td>
+                      <td>{{ $r->event->event_duration}}</td>
+                      <td>{{ $r->event->hall->id }}</td>
+                      
+                  <form action="#" method="post">
+                  @csrf
+                  {{ method_field('DELETE')}}
+                  
+                  <button type="submit" name='action' value="delete" class="btn btn-danger">Cancel</button>
+              </form>
+                      
+                      </td>
+                      </tr>
+          @endforeach
+
+
+                                  </tbody>
+                              </table>
+                              </div>
+                          </div>
+
+@else 
+<div class="row">
     <div class="col-12">
       <table class="table table-bordered">
         <thead>
@@ -32,20 +72,31 @@
             <th scope="col">Event Date</th>
             <th scope="col">Duration</th>
             <th scope="col">Venue</th>
-            <th scope="col">Seats</th>
+            <th scope="col">Tickets</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Status</th>
             <th scope="col">Cancel</th>
           </tr>
         </thead>
         <tbody>
-            @foreach ($data as $values)
+          @foreach ($reservations as $r)
                       <tr>
-                      <th scope="row">{{$values[1]}}</th>
-                        <td>{{$values[2]}}</td>
-                        <td>{{$values[3]}}</td>
-                        <td>{{$values[4]}}</td>
-                        <td>{{$values[0]}}</td>
+                      <th scope="row">{{$r->event->name}}</th>
+                        <td>{{ $r->event->event_Date }}</td>
+                        <td>{{ $r->event->event_duration}}</td>
+                        <td>{{ $r->event->hall->id }}</td>
+                        <td>{{ $r->units }}</td>
+                        <td>KSH {{ $r->amount }}</td>
+
                         <td>
-                    <form action="{{ route('ticket.destroy',$values[5]) }}" method="post">
+                          @if ($r->event->open == 0)
+                          Open
+                          @else
+                          closed
+                          @endif
+                         </td>
+                        <td>
+                    <form action="#" method="post">
                     @csrf
                    {{ method_field('DELETE')}}
                     
@@ -57,10 +108,11 @@
             @endforeach
 
 
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
+      </tbody>
+    </table>
+  </div>
+</div>
+@endif
                           </div>
                         </div>
                     </div>

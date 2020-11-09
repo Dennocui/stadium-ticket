@@ -186,6 +186,36 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                });
            });
        </script>
+       <script>
+        function validate(evt) {
+            var theEvent = evt || window.event;
+          
+            // Handle paste
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            // Handle key press
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]/;
+            if( !regex.test(key) ) {
+              theEvent.returnValue = false;
+              if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+          }
+    </script>
+
+       <script>
+           function calculate() {
+  var x = document.getElementById('units').value || 0;
+  var y = document.getElementById('price').value || 0;
+  var result = document.getElementById('amount');
+  var myResult = parseInt(x) * parseInt(y);
+  result.value = myResult;
+
+}
+           </script>
 </body>
 
 </html>

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\ticket;
 use App\hall;
+use PDF;
 
 use Illuminate\Validation\Rule;
 
@@ -168,6 +169,7 @@ class EventController extends Controller
             $event->descrition = $request->input('EventDescription');
             $event->image = 'cover_images/' . $fileNameToStore;
             $event->hall_id = $request->input('hall_id');
+            $event->price = $request->input('price');
             $event->event_Date = $request->input('EventDate') . " " . $request->input('EventStartTime');
             $event->event_duration = $request->input('EventDuration');
 
@@ -184,36 +186,47 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        $event = event::find($id);
-        if (!isset($event)) {
+    {   
+        $event1 = event::find($id);
+        if (!isset($event1)) {
             return redirect('/event')->with('success', 'No Event Found'); //** Dummy Erorr Content Page */
         }
 
-        $reserved_tickets = 0;
-        $total = 0;
+        $now = Carbon::now()->toDateString();
+        $match = [
+            ['event_id', '=', $id],
+            
+        ];
 
-        if (Gate::allows('isAdmin')) {
+        $tickets = Ticket::where($match)->get();
 
-            $tickets = ticket::all($columns = ['Event_id', 'Seat_numbers'])->filter(function ($ticket) use ($id) {
-                if ($ticket->Event_id == $id) {
-                    return $ticket;
-                }
-            });
-            $hall = hall::find($event->hall_id);
-            $total = $hall->no_rows * $hall->no_Seats;
-            foreach ($tickets as $ticket) {
-                $reserved_tickets += count(explode(' ', $ticket->Seat_numbers));
-            }
-        }
+        $event = Event::findOrFail($id);
+        $hall = hall::find($event->hall_id);
+        $total = $hall->no_rows * $hall->no_Seats;
+
 
         $data = [
-            'reserved_tickets'  => $reserved_tickets,
-            'event'   => $event,
+            
+            // 'event'   => $event,
             'total' => $total,
+            'tickets'=> $tickets,
+            'event' => $event,
         ];
         return view('pages.eventDetails')->with($data); //* Dummy page.
     }
+
+     // Generate PDF
+     public function createPDF() {
+        // retreive all records from db
+        $data = Ticket::all();
+  
+        // share data to view
+        view()->share('ticket',$data);
+        $pdf = PDF::loadView('pdf_view', $data);
+  
+        // download PDF file with download method
+        return $pdf->download('pdf_file.pdf');
+      }
 
     /**
      * Show the form for editing the specified resource.
@@ -251,7 +264,10 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return abort(404);
+        $event = event::findOrFail($id);
+        $event->update($request->all());
+
+       return redirect('/event')->with('success', 'Event Edited Successfully');
     }
 
     /**

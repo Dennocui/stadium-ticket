@@ -28,13 +28,18 @@ class TicketController extends Controller
     public function index()
     {
         if (Gate::allows('isCustomer')) {
+
             $reservations = ticket::where('customer_id', Auth::user()->id)->get();
-            $data = array();
-            foreach ($reservations as $reservation) {
-                $event = event::find($reservation->Event_id);
-                array_push($data, array($reservation->Seat_numbers, $event->name, $event->event_Date, $event->event_duration, $event->hall_id, $reservation->id));
-            }
-            return view('pages.ticketsView')->with('data', $data);
+            
+            
+            return view('pages.ticketsView')->with('reservations', $reservations);
+
+        }else{
+
+            $tickets = ticket::all();
+
+            return view('pages.tickets', compact('tickets'));
+
         }
         return abort(404);
     }
@@ -47,6 +52,9 @@ class TicketController extends Controller
     public function create()
     {
         return abort(404);
+        // $events = \App\Event::get()->pluck('title', 'id')->prepend('Please select', '');
+
+        // return view('admin.tickets.create', compact('events'));
     }
 
     /**
@@ -58,37 +66,20 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         if (Gate::allows('isCustomer')) {
-            $this->validate($request, [
-                'chairs' => ['required', 'string'],
-            ]);
-            // return  array_column($array, null);
-            $arr = json_decode(ticket::where('Event_id', $request->input('eventID'))->get('Seat_numbers'), true);
-            $array = array_column($arr, 'Seat_numbers');
-            if (count($array)  != 0) {
-                $a1 = explode(' ', $array[0]);
-                for ($i = 0; $i < count($array) - 1; $i++) {
-                    $a1 = array_merge($a1, explode(' ', $array[$i + 1]));
-                }
-            }
+            
+        $ticket = new ticket();
+        $ticket->customer_id = $request->input('customer_id');
+        $ticket->event_id = $request->input('Event_id');
+        $ticket->units = $request->input('units');
+        $ticket->amount = $request->input('amount');
 
-            $common_seats = array_intersect(explode(' ', $request->input('chairs')), $a1);
-            if (count($common_seats) != 0) {
-                return redirect('/ticket/' . $request->input('eventID'))->with('success', "Sorry, Seats You Have Chosen has Been Reserved, Choose Again.");
-            } else {
-                try {
-                    $ticket = new ticket();
-                    $ticket->customer_id = $request->input('userID');
-                    $ticket->Event_id = $request->input('eventID');
-                    $ticket->Seat_numbers = $request->input('chairs');
+        $ticket->save();
+        // $ticket = ticket::create($request->all());
 
-                    $ticket->save();
-                    broadcast(new ReservedTickets($request->input('eventID') . " " . $request->input('chairs')))->toOthers();
-                    return redirect('/event/' . $request->input('eventID'))->with('success', "Tickets Reserved Successfully, Check Them in 'Reserved Tickets' Tab");
-                } catch (\Exception $e) {
-                    return redirect('/ticket/' . $request->input('eventID'))->with('success', "Sorry, Seats You Have Chosen has Been Reserved, Choose Again.");
-                }
+        return redirect('/event/' . $request->input('eventID'))->with('success', "Tickets Booked Successfully, Check Them in 'Reserved Tickets' Tab");
+                
             }
-        }
+        
         return abort(404);
     }
     /**
@@ -103,7 +94,7 @@ class TicketController extends Controller
             $event = event::find($id);
             if (isset($event)) {
                 $hall = hall::find($event->hall_id);
-                $arr = json_decode(ticket::where('Event_id', $id)->get('Seat_numbers'), true);
+                $arr = json_decode(ticket::where('event_id', $id)->get('Seat_numbers'), true);
                 $array = array_column($arr, 'Seat_numbers');
                 $a1 = array();
                 if (count($array)  != 0) {
@@ -162,7 +153,7 @@ class TicketController extends Controller
         if (Gate::allows('isCustomer')) {
             $ticket = ticket::find($id);
             if (isset($ticket)) {
-                $event = event::find($ticket->Event_id);
+                $event = event::find($ticket->event_id);
                 $TimeNow = Carbon::now();
                 $eventDate = Carbon::parse($event->event_Date);
 

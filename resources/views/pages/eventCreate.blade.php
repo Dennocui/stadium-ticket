@@ -85,8 +85,21 @@
                                     @endif
                                 </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="EventName">Price</label>
+                                        <input required type="text" class="form-control" id="price" placeholder="Price" @error('price') is-invalid @enderror name="price" value="{{ old('price') }}" required autocomplete="price" autofocus>
+                                       
+                                            @if(Session::has('errors'))  
+                                            @if(Session::get('errors')->has('price'))  
+                                                   <div class="alert alert-danger"> {{ Session::get('errors')->first('price') }}</div>
+                                            @endif
+                                            @endif
+                                    </div>
+
                                 </div>
-                            </div>    
+                            </div> 
+                              
                         
                            
                             
