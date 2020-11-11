@@ -41,7 +41,7 @@ Route::resource('ticket', 'TicketController');
 Route::resource('user', 'UserController');
 Route::resource('Admin', 'AdminController');
 
-Route::get('event/pdf','EventController@createPDF');
+// Route::get('event/pdf','EventController@createPDF');
 
 // Route::get('/launchpayer', function(){
 //     return view('payer');
@@ -49,7 +49,7 @@ Route::get('event/pdf','EventController@createPDF');
 
 // Route::post('/ticket','TicketController@pay')->name('ticket.pay');;
 
-Route::post('/callback','confirmcallback@storeResults');
+// Route::post('/callback','confirmcallback@storeResults');
 
 
 Auth::routes(); //** TODO: BLock not needed extra auth Routes */
