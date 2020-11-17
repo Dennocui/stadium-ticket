@@ -1,6 +1,3 @@
-@extends('layouts.app')
-@section('content')
-
 
 <table class="table table-bordered">
     <thead>
@@ -9,7 +6,7 @@
         <th scope="col">Customer</th>
         <th scope="col">Email</th>
         <th scope="col">Tickets</th>
-        <th scope="col">Amount</th>
+        <th scope="col">Amoun</th>
         <th></th>
         
         
@@ -34,4 +31,3 @@
                             </table>
 
 
-@endsection

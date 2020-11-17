@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://stadium-ticket.herokuapp.com'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'Africa/Cairo',
+    'timezone' => 'Africa/Nairobi',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        SmoDav\Mpesa\Laravel\ServiceProvider::class,
+        Gathuku\Mpesa\MpesaServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         
 
     ],
@@ -228,9 +229,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'STK'       => SmoDav\Mpesa\Laravel\Facades\STK::class,
-        'Registrar' => SmoDav\Mpesa\Laravel\Facades\Registrar::class,
-        'Identity' => SmoDav\Mpesa\Laravel\Facades\Identity::class,
+        'Mpesa' => Gathuku\Mpesa\Facades\Mpesa::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
 
     ],
 

@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\File;
 use App\ticket;
 use App\hall;
 use PDF;
-
+use App\Exports\EventExport;
+use Maatwebsite\Excel\Facades\Excel;
+use DB;
 use Illuminate\Validation\Rule;
 
 class EventController extends Controller
@@ -188,6 +190,7 @@ class EventController extends Controller
     public function show($id)
     {   
         $event1 = event::find($id);
+       
         if (!isset($event1)) {
             return redirect('/event')->with('success', 'No Event Found'); //** Dummy Erorr Content Page */
         }
@@ -203,7 +206,7 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         $hall = hall::find($event->hall_id);
         $total = $hall->no_rows * $hall->no_Seats;
-
+        
 
         $data = [
             
@@ -212,21 +215,59 @@ class EventController extends Controller
             'tickets'=> $tickets,
             'event' => $event,
         ];
+
+        
+        
+
         return view('pages.eventDetails')->with($data); //* Dummy page.
     }
 
+
+
+    //Excel export for event antendees
+
+    // public function export(Request $request){
+
+    //     $event_list = Excel::download(new EventExport('event_id', $request), 'Antendees.xlsx');
+        
+    //     return $event_list;
+
+    // }
+
+
+
+
+
      // Generate PDF
-     public function createPDF() {
+    //  public function export($id ='') {
+
+    //     // retreive all records from db
+    //     $data = ticket::all();
+            
+    //     $pdf = PDF::loadView('pdf_view', compact('data'));
+        
+    //     return $pdf->download('customer-list.pdf');
+            
+      
+    // }
+
+    public function export(Request $request) {
         // retreive all records from db
-        $data = Ticket::all();
-  
+        $id =  $request->input('id');
+
+        $data = ticket::where('event_id', $id);
+        // DB::table("tickets")->where('event_id', $id)->first();
+        
         // share data to view
-        view()->share('ticket',$data);
-        $pdf = PDF::loadView('pdf_view', $data);
+        view()->share('data',$data);
+
+        $pdf = PDF::loadView('pdf');
   
         // download PDF file with download method
-        return $pdf->download('pdf_file.pdf');
+        return $pdf->download('pdffile.pdf');
       }
+    
+    
 
     /**
      * Show the form for editing the specified resource.

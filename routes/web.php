@@ -41,11 +41,8 @@ Route::resource('ticket', 'TicketController');
 Route::resource('user', 'UserController');
 Route::resource('Admin', 'AdminController');
 
-// Route::get('event/pdf','EventController@createPDF');
 
-// Route::get('/launchpayer', function(){
-//     return view('payer');
-// });
+Route::post('export', 'EventController@export')->name('event.export');
 
 // Route::post('/ticket','TicketController@pay')->name('ticket.pay');;
 

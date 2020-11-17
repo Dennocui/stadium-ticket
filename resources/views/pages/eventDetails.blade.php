@@ -58,8 +58,19 @@
 <div class="row">
   <div class="col-12">
     <div class="d-flex justify-content-end mb-4">
-        <a class="btn btn-primary" href="{{ URL::to('/event/pdf') }}">Export to PDF</a>
+
+<form action="{{ route('event.export') }}" method="POST">
+@csrf
+<input hidden value ="{{$event->id}}" name='id' >
+
+        <button class="btn btn-primary" type="Submit">Export to Excel</button>
+
+</form>
+    
+    
+    
     </div>
+
       <table class="table table-bordered">
       <thead>
           <tr>

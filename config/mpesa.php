@@ -1,73 +1,85 @@
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Default Account
-    |--------------------------------------------------------------------------
-    |
-    | This is the default account to be used when none is specified.
+
+     //Specify the environment mpesa is running, sandbox or production
+     'mpesa_env' => 'sandbox',
+    /*-----------------------------------------
+    |The App consumer key
+    |------------------------------------------
     */
+    'consumer_key'   => 'UiYNqf0fkYzQpvC603EvGvBX5Ki7VyJ1',
 
-    'default' => 'staging',
-    // 'status' => 'sandbox',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Native File Cache Location
-    |--------------------------------------------------------------------------
-    |
-    | When using the Native Cache driver, this will be the relative directory
-    | where the cache information will be stored.
+    /*-----------------------------------------
+    |The App consumer Secret
+    |------------------------------------------
     */
+    'consumer_secret' => 'NzebnEqBiIhfRt3l',
 
-    'cache_location' => '../cache',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Accounts
-    |--------------------------------------------------------------------------
-    |
-    | These are the accounts that can be used with the package. You can configure
-    | as many as needed. Two have been setup for you.
-    |
-    | Sandbox: Determines whether to use the sandbox, Possible values: sandbox | production
-    | Initiator: This is the username used to authenticate the transaction request
-    | LNMO:
-    |    paybill: Your paybill number
-    |    shortcode: Your business shortcode
-    |    passkey: The passkey for the paybill number
-    |    callback: Endpoint that will be be queried on completion or failure of the transaction.
-    |
+    /*-----------------------------------------
+    |The paybill number
+    |------------------------------------------
     */
+    'paybill'         => 601380,
 
-    'accounts' => [
-        'staging' => [
-            'sandbox' => true,
-            'key' => 'UiYNqf0fkYzQpvC603EvGvBX5Ki7VyJ1',
-            'secret' => 'NzebnEqBiIhfRt3l',
-            'initiator' => 'apitest363',
-            'id_validation_callback' => 'http://example.com/callback?secret=some_secret_hash_key',
-            'lnmo' => [
-                'paybill' => 174379,
-                'shortcode' => 174379,
-                'passkey' => 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919',
-                'callback' => 'http://example.com/callback?secret=some_secret_hash_key',
-            ]
-        ],
+    /*-----------------------------------------
+    |Lipa Na Mpesa Online Shortcode
+    |------------------------------------------
+    */
+    'lipa_na_mpesa'  => '174379',
 
-        'production' => [
-            'sandbox' => false,
-            'key' => '',
-            'secret' => '',
-            'initiator' => 'apitest363',
-            'id_validation_callback' => 'http://example.com/callback?secret=some_secret_hash_key',
-            'lnmo' => [
-                'paybill' => 174379,
-                'shortcode' => 174379,
-                'passkey' => 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919',
-                'callback' => 'http://example.com/callback?secret=some_secret_hash_key',
-            ]
-        ],
-    ],
+    /*-----------------------------------------
+    |Lipa Na Mpesa Online Passkey
+    |------------------------------------------
+    */
+    'lipa_na_mpesa_passkey' => 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919',
+
+    /*-----------------------------------------
+    |Initiator Username.
+    |------------------------------------------
+    */
+    'initiator_username' => 'testapi113',
+
+    /*-----------------------------------------
+    |Initiator Password
+    |------------------------------------------
+    */
+    'initiator_password' => 'Safaricom007@',
+
+    /*-----------------------------------------
+    |Test phone Number
+    |------------------------------------------
+    */
+    'test_msisdn ' => '254706173177',
+
+    /*-----------------------------------------
+    |Lipa na Mpesa Online callback url
+    |------------------------------------------
+    */
+    'lnmocallback' => 'https://2cfc75e551d6.ngrok.io',
+
+     /*-----------------------------------------
+    |C2B  Validation url
+    |------------------------------------------
+    */
+    'c2b_validate_callback' => 'https://2cfc75e551d6.ngrok.io',
+
+    /*-----------------------------------------
+    |C2B confirmation url
+    |------------------------------------------
+    */
+    'c2b_confirm_callback' => 'https://b2d7e6a4.ngrok.io/api/validate?key=ertyuiowwws',
+
+    /*-----------------------------------------
+    |B2C timeout url
+    |------------------------------------------
+    */
+    'b2c_timeout' => 'https://b2d7e6a4.ngrok.io/api/validate?key=ertyuiowwws',
+
+    /*-----------------------------------------
+    |B2C results url
+    |------------------------------------------
+    */
+    'b2c_result' => 'https://b2d7e6a4.ngrok.io/api/validate?key=ertyuiowwws'
+
 ];
