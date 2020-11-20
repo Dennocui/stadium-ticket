@@ -26,7 +26,7 @@
         <th scope="col">Customer</th>
         <th scope="col">Email</th>
         <th scope="col">Tickets</th>
-        <th scope="col">Amoun</th>
+        <th scope="col">Amount</th>
         <th></th>
         
         
