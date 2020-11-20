@@ -59,15 +59,9 @@
   <div class="col-12">
     <div class="d-flex justify-content-end mb-4">
 
-<form action="{{ route('event.export') }}" method="POST">
-@csrf
-<input hidden value ="{{$event->id}}" name='id' >
 
-        <button class="btn btn-primary" type="Submit">Export to Excel</button>
-
-</form>
     
-    
+<a class="btn btn-primary" href="{{ route('pdfview',['download'=>'pdf', 'id' => $event->id ]) }}">Download PDF</a>
     
     </div>
 
@@ -84,13 +78,16 @@
       </thead>
       <tbody>
           @foreach ($tickets as $r)
+          {{-- @if( $r->event_id == 1 ) --}}
                       <tr>
                       <th scope="row">{{$r->user->fname}} {{$r->user->lname}}</th>
                       <td>{{ $r->user->email }}</td>
-                      <td>{{ $r->units}}</td>
+                      <td>{{ $r->units}} Units</td>
                       <td>{{ $r->amount }}</td>
                       
+                      
                       </tr>
+            {{-- @endif --}}
           @endforeach
 
 

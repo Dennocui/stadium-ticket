@@ -224,20 +224,6 @@ class EventController extends Controller
 
 
 
-    //Excel export for event antendees
-
-    // public function export(Request $request){
-
-    //     $event_list = Excel::download(new EventExport('event_id', $request), 'Antendees.xlsx');
-        
-    //     return $event_list;
-
-    // }
-
-
-
-
-
      // Generate PDF
     //  public function export($id ='') {
 
@@ -251,21 +237,34 @@ class EventController extends Controller
       
     // }
 
-    public function export(Request $request) {
-        // retreive all records from db
-        $id =  $request->input('id');
+    public function pdfview(Request $request) {
 
-        $data = ticket::where('event_id', $id);
-        // DB::table("tickets")->where('event_id', $id)->first();
+        $event_id  = $request->input('id');
+
+        $match = [
+            ['event_id', '=', $event_id],
+            
+        ];
+
+        $data = Ticket::where($match)->get();
         
-        // share data to view
-        view()->share('data',$data);
 
-        $pdf = PDF::loadView('pdf');
-  
-        // download PDF file with download method
-        return $pdf->download('pdffile.pdf');
-      }
+        
+
+        if($request->has('download')){
+
+            view()->share('data',$data);
+
+            $pdf = PDF::loadView('pdf', compact('data'));
+
+        return $pdf->setPaper('a4')->download('event.pdf');
+
+        }
+
+        return redirect('/event');
+}
+
+    
     
     
 

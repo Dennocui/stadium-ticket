@@ -106,32 +106,6 @@ class TicketController extends Controller
 
 
 
-    private function random_number_string($length)
-    {
-        $faker = Factory::create();
-        return $faker->randomNumber($length);
-    }
-
-    private function handleSTKrequestResp($mpesa_response)
-    {
-        if($mpesa_response){
-            $payload = json_decode(json_encode($mpesa_response));
-//           
-            if (Arr::has($payload,'ResponseCode')) {
-                if ($payload->ResponseCode == 0) {
-                    return response()->json([
-                        'data' => $payload,
-                        'message' => 'Enter your Mpesa PIN to complete the order'],200);
-                } else{
-                    return response()->json(['message' => 'Error Occurred while initiating payment, try again'], 400);
-                }
-            }else{
-                return response()->json(['message' => 'Error Occurred while initiating payment, try again'], 400);
-            }
-        }
-        return response()->json(['message' => 'Error Occurred while initiating payment, try again'], 400);
-    }
-
     /**
      * Display the specified resource.
      *

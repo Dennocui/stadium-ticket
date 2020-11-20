@@ -42,7 +42,8 @@ Route::resource('user', 'UserController');
 Route::resource('Admin', 'AdminController');
 
 
-Route::post('export', 'EventController@export')->name('event.export');
+// Route::post('export', 'EventController@export')->name('event.export');
+Route::get('pdfview',array('as'=>'pdfview','uses'=>'EventController@pdfview'));
 
 // Route::post('/ticket','TicketController@pay')->name('ticket.pay');;
 
