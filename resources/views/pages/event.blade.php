@@ -31,7 +31,10 @@
                             <div class="event-meta-data">
                                 {{\Carbon\Carbon::parse($event->event_Date)->toDateString()}}
                             </div>
+                            @if (Auth::guest())
+                            @else
                             <a href="event/{{$event->id}}" class="btn see-more-btn">See Event</a>
+                            @endif
                         </div>
                     </div>
                 </div>
